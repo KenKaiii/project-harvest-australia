@@ -5,6 +5,7 @@ import { extractProjectData } from '../services/csvService';
 import { analyzeChatGPT } from '../services/chatGptService';
 import { downloadAsCSV } from '../utils/csvDownload';
 import { ChevronUp, ChevronDown } from 'lucide-react';
+import LoadingScreen from '../components/LoadingScreen';
 
 const Results = () => {
   const [projectData, setProjectData] = useState([]);
@@ -37,17 +38,18 @@ const Results = () => {
         } catch (err) {
           console.error('Error in fetchData:', err);
           setError(err.message);
-        } finally {
-          setIsLoading(false);
         }
       };
       fetchData();
     } else {
       console.error('Missing selectedState or selectedInfoType');
       setError('Missing state or information type');
-      setIsLoading(false);
     }
   }, [selectedState, selectedInfoType, keywords]);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
 
   const truncateText = (text, maxLength) => {
     if (typeof text !== 'string' || text === null) {
@@ -97,8 +99,9 @@ const Results = () => {
     return <ChevronDown size={16} />;
   };
 
+
   if (isLoading) {
-    return <div className="min-h-screen bg-gray-100 flex items-center justify-center">Loading...</div>;
+    return <LoadingScreen onComplete={handleLoadingComplete} />;
   }
 
   if (error) {
@@ -197,7 +200,6 @@ const Results = () => {
         </Button>
       </div>
     </div>
-  );
 };
 
 export default Results;
