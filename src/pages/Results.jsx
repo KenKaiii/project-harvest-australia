@@ -96,21 +96,21 @@ const Results = () => {
               {projectData.map((project, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                   <td className="px-4 py-2 border-b">
-                    <div className="truncate-text" title={project.by}>
+                    <div className="truncate-text text-xs" title={project.by}>
                       {truncateText(project.by, 30)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="truncate-text" title={project.name}>
+                    <div className="truncate-text text-xs" title={project.name}>
                       {truncateText(project.name, 30)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="truncate-text" title={project.area}>
+                    <div className="truncate-text text-xs" title={project.area}>
                       {truncateText(project.area, 30)}
                     </div>
                   </td>
-                  <td className="px-4 py-2 border-b">{formatBudget(project.budget)}</td>
+                  <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
                 </tr>
               ))}
             </tbody>

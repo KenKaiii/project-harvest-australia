@@ -81,7 +81,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 200px;
-  font-size: 11.2px; /* Reduced by 20% from 14px */
+  font-size: 10.08px; /* Reduced by 28% from 14px (20% + 10%) */
   position: relative;
 }
 
@@ -98,11 +98,16 @@
   white-space: normal;
   word-wrap: break-word;
   max-width: 300px;
-  font-size: 9.6px; /* Reduced by 20% from 12px */
+  font-size: 8.64px; /* Reduced by 28% from 12px (20% + 10%) */
 }
 
 /* Reduce font size for table data */
 table.min-w-full td,
 table.min-w-full th {
   font-size: 11.2px; /* Reduced by 20% from 14px */
+}
+
+/* Bold the budget numbers */
+table.min-w-full td:last-child {
+  font-weight: bold;
 }
