@@ -24,13 +24,13 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
-      <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-8 shadow-lg max-w-md w-full space-y-6 animate-pulse-glow">
+      <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-8 shadow-lg max-w-md w-full space-y-8 animate-pulse-glow">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-2">InsightPulse</h1>
-          <p className="text-xl text-white opacity-80">Uncover Hidden Insights in Seconds</p>
+          <h1 className="text-4xl font-bold text-white mb-2">BuzzBeam Tools</h1>
+          <p className="text-xl text-white opacity-80">Uncover hidden insights in seconds</p>
         </div>
         
-        <div className="space-y-4">
+        <div className="space-y-6">
           <div className="relative">
             <Select value={selectedState} onValueChange={setSelectedState}>
               <SelectTrigger className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60">
@@ -77,7 +77,7 @@ const Index = () => {
 
           <Button 
             onClick={handleExtract} 
-            className={`w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 hover:brightness-110 ${isExtracting ? 'animate-pulse' : ''}`}
+            className={`w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 hover:brightness-110 ${isExtracting ? 'animate-pulse' : ''} border-2 border-white animate-glow`}
             disabled={!selectedState || !selectedInfoType || isExtracting}
           >
             {isExtracting ? 'Extracting...' : 'Extract'}
