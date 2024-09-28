@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Select } from "@/components/ui/select";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
 const Index = () => {
@@ -20,25 +20,25 @@ const Index = () => {
         <h1 className="text-2xl font-bold mb-6 text-center">Project Information Extractor</h1>
         
         <div className="space-y-4">
-          <Select
-            value={selectedState}
-            onValueChange={setSelectedState}
-            placeholder="Select a state"
-          >
-            <Select.Item value="queensland">Queensland</Select.Item>
-            <Select.Item value="new-south-wales">New South Wales</Select.Item>
-            <Select.Item value="victoria">Victoria</Select.Item>
-            {/* Add more states as needed */}
+          <Select value={selectedState} onValueChange={setSelectedState}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select a state" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="queensland">Queensland</SelectItem>
+              <SelectItem value="new-south-wales">New South Wales</SelectItem>
+              <SelectItem value="victoria">Victoria</SelectItem>
+            </SelectContent>
           </Select>
 
-          <Select
-            value={selectedInfoType}
-            onValueChange={setSelectedInfoType}
-            placeholder="Select information type"
-          >
-            <Select.Item value="infrastructure">Infrastructure</Select.Item>
-            <Select.Item value="healthcare">Healthcare</Select.Item>
-            {/* Add more information types as needed */}
+          <Select value={selectedInfoType} onValueChange={setSelectedInfoType}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select information type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="infrastructure">Infrastructure</SelectItem>
+              <SelectItem value="healthcare">Healthcare</SelectItem>
+            </SelectContent>
           </Select>
 
           <Button 
