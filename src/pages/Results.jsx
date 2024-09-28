@@ -53,6 +53,14 @@ const Results = () => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
   };
 
+  const formatBudget = (budget) => {
+    if (typeof budget !== 'string' || budget === null) {
+      return 'N/A';
+    }
+    const numericValue = parseFloat(budget.replace(/,/g, '')) * 1000;
+    return `$${numericValue.toLocaleString()}`;
+  };
+
   if (isLoading) {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center">Loading...</div>;
   }
@@ -78,15 +86,20 @@ const Results = () => {
           <table className="min-w-full bg-white border border-gray-300 text-sm">
             <thead>
               <tr>
+                <th className="px-4 py-2 bg-gray-100 border-b">By</th>
                 <th className="px-4 py-2 bg-gray-100 border-b">Project Name</th>
                 <th className="px-4 py-2 bg-gray-100 border-b">Area</th>
                 <th className="px-4 py-2 bg-gray-100 border-b">Budget</th>
-                <th className="px-4 py-2 bg-gray-100 border-b">By</th>
               </tr>
             </thead>
             <tbody>
               {projectData.map((project, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                  <td className="px-4 py-2 border-b">
+                    <div className="truncate-text" title={project.by}>
+                      {truncateText(project.by, 30)}
+                    </div>
+                  </td>
                   <td className="px-4 py-2 border-b">
                     <div className="truncate-text" title={project.name}>
                       {truncateText(project.name, 30)}
@@ -97,12 +110,7 @@ const Results = () => {
                       {truncateText(project.area, 30)}
                     </div>
                   </td>
-                  <td className="px-4 py-2 border-b">{project.budget}</td>
-                  <td className="px-4 py-2 border-b">
-                    <div className="truncate-text" title={project.by}>
-                      {truncateText(project.by, 30)}
-                    </div>
-                  </td>
+                  <td className="px-4 py-2 border-b">{formatBudget(project.budget)}</td>
                 </tr>
               ))}
             </tbody>
