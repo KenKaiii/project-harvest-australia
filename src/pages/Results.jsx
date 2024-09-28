@@ -97,17 +97,17 @@ const Results = () => {
                 <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                   <td className="px-4 py-2 border-b">
                     <div className="truncate-text text-xs" title={project.by}>
-                      {truncateText(project.by, 50)}
+                      {truncateText(project.by, 60)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
                     <div className="truncate-text text-xs" title={project.name}>
-                      {truncateText(project.name, 50)}
+                      {truncateText(project.name, 60)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
                     <div className="truncate-text text-xs" title={project.area}>
-                      {truncateText(project.area, 50)}
+                      {truncateText(project.area, 60)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
