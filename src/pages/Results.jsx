@@ -124,7 +124,7 @@ const Results = () => {
       <div className="max-w-6xl w-full space-y-4">
         <h1 className="text-3xl font-bold mb-4 text-white text-center">Here's what we've got you..</h1>
         <div className="flex justify-center items-center space-x-8 text-white">
-          <p>State: <span className="font-semibold">{selectedState}</span></p>
+          <p>State: <span className="font-semibold">{selectedState.charAt(0).toUpperCase() + selectedState.slice(1)}</span></p>
           <p>Information Type: <span className="font-semibold">{selectedInfoType}</span></p>
           <p>Keywords: <span className="font-semibold">{keywords || 'None'}</span></p>
         </div>
@@ -193,18 +193,18 @@ const Results = () => {
               {projectData.map((project, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                   <td className="px-4 py-2 border-b">
-                    <div className="w-48 whitespace-pre-wrap line-clamp-2" title={project.by}>
-                      {truncateText(project.by, 50)}
+                    <div className="w-64 whitespace-pre-wrap line-clamp-2 text-sm" title={project.by}>
+                      {truncateText(project.by, 80)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="w-48 whitespace-pre-wrap line-clamp-2" title={project.name}>
-                      {truncateText(project.name, 50)}
+                    <div className="w-64 whitespace-pre-wrap line-clamp-2 text-sm" title={project.name}>
+                      {truncateText(project.name, 80)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="w-48 whitespace-pre-wrap line-clamp-2" title={project.area}>
-                      {truncateText(project.area, 50)}
+                    <div className="w-64 whitespace-pre-wrap line-clamp-2 text-sm" title={project.area}>
+                      {truncateText(project.area, 80)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
