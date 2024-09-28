@@ -1,7 +1,7 @@
 import Papa from 'papaparse';
 
 const stateCSVMap = {
-  queensland: 'https://drive.google.com/uc?export=download&id=17vFPD8HdTtQ1s1Nk3ktFjrFFyOe0yeWH',
+  queensland: 'https://raw.githubusercontent.com/KenKaiii/project-harvest-australia/refs/heads/main/budgets/QLDBudgets.csv',
   // Add other states here as they become available
   // 'new-south-wales': '/budgets/NSWBudgets.csv',
   // 'victoria': '/budgets/VICBudgets.csv',
