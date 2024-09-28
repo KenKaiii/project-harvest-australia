@@ -6,31 +6,27 @@ const LoadingScreen = ({ onComplete }) => {
   const [message, setMessage] = useState("We're diving deep into the records...");
 
   useEffect(() => {
+    const startTime = Date.now();
     const interval = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress >= 100) {
-          clearInterval(interval);
-          onComplete();
-          return 100;
-        }
-        return prevProgress + 1;
-      });
-    }, 50); // Adjust this value to change the overall animation speed
+      const elapsedTime = Date.now() - startTime;
+      const newProgress = Math.min((elapsedTime / 3000) * 100, 100);
+      setProgress(newProgress);
+
+      if (newProgress >= 25 && newProgress < 50) {
+        setMessage("Records found");
+      } else if (newProgress >= 50 && newProgress < 75) {
+        setMessage("Analysing with ChatGPT");
+      } else if (newProgress >= 75 && newProgress < 100) {
+        setMessage("Analysis complete");
+      } else if (newProgress === 100) {
+        setMessage("Delivering your records");
+        clearInterval(interval);
+        setTimeout(() => onComplete(), 100); // Small delay to ensure the final state is seen
+      }
+    }, 50);
 
     return () => clearInterval(interval);
   }, [onComplete]);
-
-  useEffect(() => {
-    if (progress >= 25 && progress < 50) {
-      setMessage("Records found");
-    } else if (progress >= 50 && progress < 75) {
-      setMessage("Analysing with ChatGPT");
-    } else if (progress >= 75 && progress < 100) {
-      setMessage("Analysis complete");
-    } else if (progress === 100) {
-      setMessage("Delivering your records");
-    }
-  }, [progress]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
