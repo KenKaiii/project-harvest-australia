@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Progress } from "@/components/ui/progress";
 
-const LoadingScreen = ({ onComplete }) => {
+const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("We're diving deep into the records...");
 
@@ -21,12 +21,16 @@ const LoadingScreen = ({ onComplete }) => {
       } else if (newProgress === 100) {
         setMessage("Delivering your records");
         clearInterval(interval);
-        setTimeout(() => onComplete(), 100); // Small delay to ensure the final state is seen
+        setTimeout(() => {
+          if (onLoadingComplete) {
+            onLoadingComplete();
+          }
+        }, 100); // Small delay to ensure the final state is seen
       }
     }, 50);
 
     return () => clearInterval(interval);
-  }, [onComplete]);
+  }, [onLoadingComplete]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">

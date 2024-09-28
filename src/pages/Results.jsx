@@ -38,28 +38,28 @@ const Results = () => {
         } catch (err) {
           console.error('Error in fetchData:', err);
           setError(err.message);
-        } finally {
-          // Set a timer to ensure loading lasts at least 3 seconds
-          timer = setTimeout(() => {
-            setIsLoading(false);
-          }, 3000);
         }
       };
       fetchData();
     } else {
       console.error('Missing selectedState or selectedInfoType');
       setError('Missing state or information type');
-      // Set a timer to ensure loading lasts at least 3 seconds even in case of error
-      timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
     }
+
+    // Set a timer to ensure loading lasts at least 3 seconds
+    timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
 
     // Cleanup function to clear the timer if the component unmounts
     return () => {
       if (timer) clearTimeout(timer);
     };
   }, [selectedState, selectedInfoType, keywords]);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
 
   const truncateText = (text, maxLength) => {
     if (typeof text !== 'string' || text === null) {
@@ -109,8 +109,9 @@ const Results = () => {
     return <ChevronDown size={16} />;
   };
 
+
   if (isLoading) {
-    return <LoadingScreen />;
+    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
   }
 
   if (error) {
