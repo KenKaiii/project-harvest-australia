@@ -1,21 +1,21 @@
 import Papa from 'papaparse';
 
 const stateCSVMap = {
-  queensland: '/budgets/QLDBudgets.csv',
+  queensland: 'https://drive.google.com/uc?export=download&id=17vFPD8HdTtQ1s1Nk3ktFjrFFyOe0yeWH',
   // Add other states here as they become available
   // 'new-south-wales': '/budgets/NSWBudgets.csv',
   // 'victoria': '/budgets/VICBudgets.csv',
 };
 
 export const extractProjectData = async (state, infoType) => {
-  const csvFilePath = stateCSVMap[state.toLowerCase()];
+  const csvFileUrl = stateCSVMap[state.toLowerCase()];
   
-  if (!csvFilePath) {
+  if (!csvFileUrl) {
     throw new Error(`No CSV file found for state: ${state}`);
   }
 
   try {
-    const response = await fetch(csvFilePath);
+    const response = await fetch(csvFileUrl);
     const csvData = await response.text();
 
     return new Promise((resolve, reject) => {
