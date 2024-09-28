@@ -78,6 +78,7 @@ const Results = () => {
                 <th className="px-4 py-2 bg-gray-100 border-b">Project Name</th>
                 <th className="px-4 py-2 bg-gray-100 border-b">Area</th>
                 <th className="px-4 py-2 bg-gray-100 border-b">Budget</th>
+                <th className="px-4 py-2 bg-gray-100 border-b">By</th>
               </tr>
             </thead>
             <tbody>
@@ -94,6 +95,11 @@ const Results = () => {
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">{project.budget}</td>
+                  <td className="px-4 py-2 border-b">
+                    <div className="truncate-text" title={project.by}>
+                      {truncateText(project.by, 30)}
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
