@@ -55,21 +55,25 @@ const Results = () => {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center text-red-500">{error}</div>;
   }
 
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold mb-4">Extracted Project Information</h1>
-        <p className="mb-2">
+        <p className="mb-2 text-sm">
           State: <span className="font-semibold">{selectedState}</span>
         </p>
-        <p className="mb-2">
+        <p className="mb-2 text-sm">
           Information Type: <span className="font-semibold">{selectedInfoType}</span>
         </p>
-        <p className="mb-4">
+        <p className="mb-4 text-sm">
           ChatGPT API Status: <span className="font-semibold">{chatGptStatus}</span>
         </p>
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-300">
+          <table className="min-w-full bg-white border border-gray-300 text-sm">
             <thead>
               <tr>
                 <th className="px-4 py-2 bg-gray-100 border-b">Project Name</th>
@@ -81,14 +85,14 @@ const Results = () => {
               {projectData.map((project, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                   <td className="px-4 py-2 border-b">{project.name}</td>
-                  <td className="px-4 py-2 border-b">{project.area}</td>
+                  <td className="px-4 py-2 border-b">{truncateText(project.area, 30)}</td>
                   <td className="px-4 py-2 border-b">{project.budget}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <Button onClick={() => navigate('/')} className="mt-4">
+        <Button onClick={() => navigate('/')} className="mt-4 text-sm">
           Back to Home
         </Button>
       </div>
