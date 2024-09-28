@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button";
 import { extractProjectData } from '../services/csvService';
 import { analyzeChatGPT } from '../services/chatGptService';
 import { downloadAsCSV } from '../utils/csvDownload';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 
 const Results = () => {
   const [projectData, setProjectData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [chatGptStatus, setChatGptStatus] = useState('Not connected');
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const location = useLocation();
   const navigate = useNavigate();
   const { selectedState, selectedInfoType, keywords } = location.state || {};
@@ -66,6 +68,35 @@ const Results = () => {
     downloadAsCSV(projectData, 'project_data.csv');
   };
 
+  const sortData = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+
+    const sortedData = [...projectData].sort((a, b) => {
+      if (key === 'budget') {
+        const aValue = parseFloat(a[key].replace(/,/g, '')) || 0;
+        const bValue = parseFloat(b[key].replace(/,/g, '')) || 0;
+        return direction === 'ascending' ? aValue - bValue : bValue - aValue;
+      } else {
+        if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
+        if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
+        return 0;
+      }
+    });
+
+    setProjectData(sortedData);
+  };
+
+  const getSortIcon = (key) => {
+    if (sortConfig.key === key) {
+      return sortConfig.direction === 'ascending' ? <ChevronUp size={16} /> : <ChevronDown size={16} />;
+    }
+    return null;
+  };
+
   if (isLoading) {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center">Loading...</div>;
   }
@@ -99,10 +130,30 @@ const Results = () => {
           <table className="min-w-full bg-white border border-gray-300 text-sm">
             <thead>
               <tr>
-                <th className="px-4 py-2 bg-gray-100 border-b text-left text-[1.15em]">By</th>
-                <th className="px-4 py-2 bg-gray-100 border-b text-left text-[1.15em]">Project Name</th>
-                <th className="px-4 py-2 bg-gray-100 border-b text-left text-[1.15em]">Area</th>
-                <th className="px-4 py-2 bg-gray-100 border-b text-left text-[1.15em]">Budget</th>
+                <th 
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  onClick={() => sortData('by')}
+                >
+                  By {getSortIcon('by')}
+                </th>
+                <th 
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  onClick={() => sortData('name')}
+                >
+                  Project Name {getSortIcon('name')}
+                </th>
+                <th 
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  onClick={() => sortData('area')}
+                >
+                  Area {getSortIcon('area')}
+                </th>
+                <th 
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  onClick={() => sortData('budget')}
+                >
+                  Budget {getSortIcon('budget')}
+                </th>
               </tr>
             </thead>
             <tbody>
