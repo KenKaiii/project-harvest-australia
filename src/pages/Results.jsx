@@ -46,6 +46,13 @@ const Results = () => {
     }
   }, [selectedState, selectedInfoType]);
 
+  const truncateText = (text, maxLength) => {
+    if (typeof text !== 'string' || text === null) {
+      return 'N/A';
+    }
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  };
+
   if (isLoading) {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center">Loading...</div>;
   }
@@ -53,10 +60,6 @@ const Results = () => {
   if (error) {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center text-red-500">{error}</div>;
   }
-
-  const truncateText = (text, maxLength) => {
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
