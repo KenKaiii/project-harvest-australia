@@ -89,15 +89,15 @@ const Results = () => {
           <table className="min-w-full bg-white border border-gray-300 text-sm">
             <thead>
               <tr>
-                <th className="px-4 py-2 bg-gray-100 border-b">By</th>
-                <th className="px-4 py-2 bg-gray-100 border-b">Project Name</th>
-                <th className="px-4 py-2 bg-gray-100 border-b">Area</th>
-                <th className="px-4 py-2 bg-gray-100 border-b">Budget</th>
+                <th className="px-4 py-2 bg-gray-100 border-b text-left text-[1.15em]">By</th>
+                <th className="px-4 py-2 bg-gray-100 border-b text-left text-[1.15em]">Project Name</th>
+                <th className="px-4 py-2 bg-gray-100 border-b text-left text-[1.15em]">Area</th>
+                <th className="px-4 py-2 bg-gray-100 border-b text-left text-[1.15em]">Budget</th>
               </tr>
             </thead>
             <tbody>
               {projectData.map((project, index) => (
-                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                <tr key={index} className="hover:bg-black hover:text-white transition-colors duration-200">
                   <td className="px-4 py-2 border-b">
                     <div className="truncate-text text-xs" title={project.by}>
                       {truncateText(project.by, 60)}
