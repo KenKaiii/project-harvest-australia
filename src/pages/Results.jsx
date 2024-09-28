@@ -50,7 +50,7 @@ const Results = () => {
     setIsLoading(false);
   };
 
-  const truncateText = (text, maxLength, maxLines = 2) => {
+  const truncateText = (text, maxLength) => {
     if (typeof text !== 'string' || text === null) {
       return 'N/A';
     }
@@ -58,8 +58,8 @@ const Results = () => {
     let result = '';
     let lines = 1;
     for (let word of words) {
-      if ((result + word).length > maxLength * lines) {
-        if (lines >= maxLines) {
+      if ((result + word).length > maxLength) {
+        if (lines >= 2) {
           return result.trim() + '...';
         }
         result += '\n';
@@ -194,17 +194,17 @@ const Results = () => {
                 <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                   <td className="px-4 py-2 border-b">
                     <div className="w-48 whitespace-pre-wrap" title={project.by}>
-                      {truncateText(project.by, 50, 2)}
+                      {truncateText(project.by, 50)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
                     <div className="w-48 whitespace-pre-wrap" title={project.name}>
-                      {truncateText(project.name, 50, 2)}
+                      {truncateText(project.name, 50)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
                     <div className="w-48 whitespace-pre-wrap" title={project.area}>
-                      {truncateText(project.area, 50, 2)}
+                      {truncateText(project.area, 50)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
