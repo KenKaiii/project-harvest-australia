@@ -3,63 +3,84 @@ import { useNavigate } from 'react-router-dom';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ChevronDown } from 'lucide-react';
 
 const Index = () => {
   const [selectedState, setSelectedState] = useState('');
   const [selectedInfoType, setSelectedInfoType] = useState('');
   const [keywords, setKeywords] = useState('');
+  const [isExtracting, setIsExtracting] = useState(false);
   const navigate = useNavigate();
 
   const handleExtract = () => {
     if (selectedState && selectedInfoType) {
-      navigate('/results', { state: { selectedState, selectedInfoType, keywords } });
+      setIsExtracting(true);
+      setTimeout(() => {
+        setIsExtracting(false);
+        navigate('/results', { state: { selectedState, selectedInfoType, keywords } });
+      }, 2000);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h1 className="text-2xl font-bold mb-6 text-center">Project Information Extractor</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
+      <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-8 shadow-lg max-w-md w-full space-y-6 animate-pulse-glow">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-white mb-2">InsightPulse</h1>
+          <p className="text-xl text-white opacity-80">Uncover Hidden Insights in Seconds</p>
+        </div>
         
         <div className="space-y-4">
-          <Select value={selectedState} onValueChange={setSelectedState}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select a state" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="queensland">Queensland</SelectItem>
-              <SelectItem value="new-south-wales">New South Wales</SelectItem>
-              <SelectItem value="victoria">Victoria</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="relative">
+            <Select value={selectedState} onValueChange={setSelectedState}>
+              <SelectTrigger className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60">
+                <SelectValue placeholder="Select a state" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="queensland">Queensland</SelectItem>
+                <SelectItem value="new-south-wales">New South Wales</SelectItem>
+                <SelectItem value="victoria">Victoria</SelectItem>
+              </SelectContent>
+            </Select>
+            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white" />
+          </div>
 
-          <Select value={selectedInfoType} onValueChange={setSelectedInfoType}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select information type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Transport and Main Roads">Transport and Main Roads</SelectItem>
-              <SelectItem value="Health">Health</SelectItem>
-              <SelectItem value="Education">Education</SelectItem>
-              <SelectItem value="Department of Housing, Local Government, Planning and Public Works">Department of Housing, Local Government, Planning and Public Works</SelectItem>
-              <SelectItem value="QBuild">QBuild</SelectItem>
-              <SelectItem value="Queensland Treasury">Queensland Treasury</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="relative">
+            <Select value={selectedInfoType} onValueChange={setSelectedInfoType}>
+              <SelectTrigger className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60">
+                <SelectValue placeholder="Select information type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Transport and Main Roads">Transport and Main Roads</SelectItem>
+                <SelectItem value="Health">Health</SelectItem>
+                <SelectItem value="Education">Education</SelectItem>
+                <SelectItem value="Department of Housing, Local Government, Planning and Public Works">Department of Housing, Local Government, Planning and Public Works</SelectItem>
+                <SelectItem value="QBuild">QBuild</SelectItem>
+                <SelectItem value="Queensland Treasury">Queensland Treasury</SelectItem>
+              </SelectContent>
+            </Select>
+            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white" />
+          </div>
 
-          <Input
-            type="text"
-            placeholder="Enter keywords (optional)"
-            value={keywords}
-            onChange={(e) => setKeywords(e.target.value)}
-          />
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder="Enter keywords (optional)"
+              value={keywords}
+              onChange={(e) => setKeywords(e.target.value)}
+              className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60"
+            />
+            <label className="absolute left-3 top-0 text-white text-opacity-60 transition-all duration-200 ease-in-out transform -translate-y-6 scale-75 origin-left">
+              Keywords
+            </label>
+          </div>
 
           <Button 
             onClick={handleExtract} 
-            className="w-full"
-            disabled={!selectedState || !selectedInfoType}
+            className={`w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 hover:brightness-110 ${isExtracting ? 'animate-pulse' : ''}`}
+            disabled={!selectedState || !selectedInfoType || isExtracting}
           >
-            Extract
+            {isExtracting ? 'Extracting...' : 'Extract'}
           </Button>
         </div>
       </div>
