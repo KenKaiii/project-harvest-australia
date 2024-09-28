@@ -70,9 +70,6 @@ const Index = () => {
               onChange={(e) => setKeywords(e.target.value)}
               className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60"
             />
-            <label className="absolute left-3 top-0 text-white text-opacity-60 transition-all duration-200 ease-in-out transform -translate-y-6 scale-75 origin-left">
-              Keywords
-            </label>
           </div>
 
           <Button 
