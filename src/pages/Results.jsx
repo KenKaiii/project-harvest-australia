@@ -18,10 +18,10 @@ const Results = () => {
   const { selectedState, selectedInfoType, keywords } = location.state || {};
 
   useEffect(() => {
+    let timer;
     if (selectedState && selectedInfoType) {
       const fetchData = async () => {
         try {
-          setIsLoading(true);
           console.log(`Fetching data for ${selectedState}, ${selectedInfoType}, keywords: ${keywords}`);
           const data = await extractProjectData(selectedInfoType, keywords);
           console.log('Data extracted successfully:', data);
@@ -39,20 +39,27 @@ const Results = () => {
           console.error('Error in fetchData:', err);
           setError(err.message);
         } finally {
-          setIsLoading(false);
+          // Set a timer to ensure loading lasts at least 3 seconds
+          timer = setTimeout(() => {
+            setIsLoading(false);
+          }, 3000);
         }
       };
       fetchData();
     } else {
       console.error('Missing selectedState or selectedInfoType');
       setError('Missing state or information type');
-      setIsLoading(false);
+      // Set a timer to ensure loading lasts at least 3 seconds even in case of error
+      timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
     }
-  }, [selectedState, selectedInfoType, keywords]);
 
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-  };
+    // Cleanup function to clear the timer if the component unmounts
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [selectedState, selectedInfoType, keywords]);
 
   const truncateText = (text, maxLength) => {
     if (typeof text !== 'string' || text === null) {
@@ -103,7 +110,7 @@ const Results = () => {
   };
 
   if (isLoading) {
-    return <LoadingScreen onComplete={handleLoadingComplete} />;
+    return <LoadingScreen />;
   }
 
   if (error) {
