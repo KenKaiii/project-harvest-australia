@@ -22,7 +22,7 @@ export const extractProjectData = async (infoType) => {
           const processedData = filteredData.map(row => ({
             name: row['Project Name'] || 'N/A',
             area: row['SA4 Name'] || 'N/A',
-            budget: row['Budget'] || 'N/A'
+            budget: row['Budgets 24-25'] || 'N/A'
           }));
           console.log('Processed data:', processedData);
           resolve(processedData);
