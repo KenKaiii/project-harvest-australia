@@ -94,7 +94,7 @@ const Results = () => {
     if (sortConfig.key === key) {
       return sortConfig.direction === 'ascending' ? <ChevronUp size={16} /> : <ChevronDown size={16} />;
     }
-    return null;
+    return <ChevronDown size={16} />;
   };
 
   if (isLoading) {
@@ -134,25 +134,37 @@ const Results = () => {
                   className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
                   onClick={() => sortData('by')}
                 >
-                  By {getSortIcon('by')}
+                  <div className="flex items-center justify-between">
+                    By
+                    {getSortIcon('by')}
+                  </div>
                 </th>
                 <th 
                   className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
                   onClick={() => sortData('name')}
                 >
-                  Project Name {getSortIcon('name')}
+                  <div className="flex items-center justify-between">
+                    Project Name
+                    {getSortIcon('name')}
+                  </div>
                 </th>
                 <th 
                   className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
                   onClick={() => sortData('area')}
                 >
-                  Area {getSortIcon('area')}
+                  <div className="flex items-center justify-between">
+                    Area
+                    {getSortIcon('area')}
+                  </div>
                 </th>
                 <th 
                   className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
                   onClick={() => sortData('budget')}
                 >
-                  Budget {getSortIcon('budget')}
+                  <div className="flex items-center justify-between">
+                    Budget
+                    {getSortIcon('budget')}
+                  </div>
                 </th>
               </tr>
             </thead>
