@@ -1,10 +1,8 @@
 import Papa from 'papaparse';
 
 const stateCSVMap = {
-  queensland: 'https://raw.githubusercontent.com/KenKaiii/project-harvest-australia/main/budgets/QLDBudgets.csv',
+  queensland: 'https://raw.githubusercontent.com/KenKaiii/project-harvest-australia/main/budgets/Queensland.csv',
   // Add other states here as they become available
-  // 'new-south-wales': '/budgets/NSWBudgets.csv',
-  // 'victoria': '/budgets/VICBudgets.csv',
 };
 
 export const extractProjectData = async (state, infoType) => {
@@ -27,22 +25,14 @@ export const extractProjectData = async (state, infoType) => {
         complete: (results) => {
           console.log('CSV parsing complete');
           console.log(`Total rows in CSV: ${results.data.length}`);
-          let filteredData;
-          if (infoType === 'Department of Transport and Main Roads') {
-            filteredData = results.data.filter(row => 
-              row.department && row.department.toLowerCase().includes('transport and main roads')
-            );
-          } else {
-            filteredData = results.data.filter(row => 
-              row.type && row.type.toLowerCase() === infoType.toLowerCase()
-            );
-          }
+          let filteredData = results.data.filter(row => 
+            row['Portfolio'] && row['Portfolio'].toLowerCase().includes('transport and main roads')
+          );
           console.log(`Filtered rows for ${infoType}: ${filteredData.length}`);
           const processedData = filteredData.map(row => ({
-            name: row.name || 'N/A',
-            budget: row.budget || 'N/A',
-            year: row.year || 'N/A',
-            department: row.department || 'N/A'
+            area: row['SA4 Name'] || 'N/A',
+            name: row['Project Name'] || 'N/A',
+            budget: row['Budget'] || 'N/A'
           }));
           console.log('Processed data:', processedData);
           resolve(processedData);

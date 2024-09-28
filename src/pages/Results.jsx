@@ -57,7 +57,7 @@ const Results = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-6">
+      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-bold mb-4">Extracted Project Information</h1>
         <p className="mb-2">
           State: <span className="font-semibold">{selectedState}</span>
@@ -68,22 +68,25 @@ const Results = () => {
         <p className="mb-4">
           ChatGPT API Status: <span className="font-semibold">{chatGptStatus}</span>
         </p>
-        <div className="bg-gray-800 text-white p-4 rounded-md overflow-auto max-h-96">
-          <pre className="whitespace-pre-wrap">
-            {projectData.length > 0 ? (
-              projectData.map((project, index) => (
-                `Project ${index + 1}:
-Name: ${project.name}
-Budget: ${project.budget}
-Year: ${project.year}
-Department: ${project.department}
-
-`
-              ))
-            ) : (
-              'No data extracted'
-            )}
-          </pre>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-300">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 bg-gray-100 border-b">Area</th>
+                <th className="px-4 py-2 bg-gray-100 border-b">Project Name</th>
+                <th className="px-4 py-2 bg-gray-100 border-b">Budget</th>
+              </tr>
+            </thead>
+            <tbody>
+              {projectData.map((project, index) => (
+                <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                  <td className="px-4 py-2 border-b">{project.area}</td>
+                  <td className="px-4 py-2 border-b">{project.name}</td>
+                  <td className="px-4 py-2 border-b">{project.budget}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <Button onClick={() => navigate('/')} className="mt-4">
           Back to Home
