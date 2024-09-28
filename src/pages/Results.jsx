@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { extractProjectData } from '../services/csvService';
 import { analyzeChatGPT } from '../services/chatGptService';
 import { downloadAsCSV } from '../utils/csvDownload';
@@ -148,74 +147,72 @@ const Results = () => {
             Download as CSV
           </Button>
         </div>
-        <Card className="bg-white rounded-xl p-8 shadow-lg">
-          <div className="overflow-x-auto">
-            <table className="w-full bg-white border border-gray-300 text-sm">
-              <thead>
-                <tr>
-                  <th 
-                    className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
-                    onClick={() => sortData('by')}
-                  >
-                    <div className="flex items-center justify-between">
-                      By
-                      {getSortIcon('by')}
+        <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
+          <table className="w-full text-sm">
+            <thead>
+              <tr>
+                <th 
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  onClick={() => sortData('by')}
+                >
+                  <div className="flex items-center justify-between">
+                    By
+                    {getSortIcon('by')}
+                  </div>
+                </th>
+                <th 
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  onClick={() => sortData('name')}
+                >
+                  <div className="flex items-center justify-between">
+                    Project Name
+                    {getSortIcon('name')}
+                  </div>
+                </th>
+                <th 
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  onClick={() => sortData('area')}
+                >
+                  <div className="flex items-center justify-between">
+                    Area
+                    {getSortIcon('area')}
+                  </div>
+                </th>
+                <th 
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  onClick={() => sortData('budget')}
+                >
+                  <div className="flex items-center justify-between">
+                    Budget
+                    {getSortIcon('budget')}
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {projectData.map((project, index) => (
+                <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
+                  <td className="px-4 py-2 border-b">
+                    <div className="w-48 whitespace-pre-wrap" title={project.by}>
+                      {truncateText(project.by, 50, 2)}
                     </div>
-                  </th>
-                  <th 
-                    className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
-                    onClick={() => sortData('name')}
-                  >
-                    <div className="flex items-center justify-between">
-                      Project Name
-                      {getSortIcon('name')}
+                  </td>
+                  <td className="px-4 py-2 border-b">
+                    <div className="w-48 whitespace-pre-wrap" title={project.name}>
+                      {truncateText(project.name, 50, 2)}
                     </div>
-                  </th>
-                  <th 
-                    className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
-                    onClick={() => sortData('area')}
-                  >
-                    <div className="flex items-center justify-between">
-                      Area
-                      {getSortIcon('area')}
+                  </td>
+                  <td className="px-4 py-2 border-b">
+                    <div className="w-48 whitespace-pre-wrap" title={project.area}>
+                      {truncateText(project.area, 50, 2)}
                     </div>
-                  </th>
-                  <th 
-                    className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
-                    onClick={() => sortData('budget')}
-                  >
-                    <div className="flex items-center justify-between">
-                      Budget
-                      {getSortIcon('budget')}
-                    </div>
-                  </th>
+                  </td>
+                  <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {projectData.map((project, index) => (
-                  <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
-                    <td className="px-4 py-2 border-b">
-                      <div className="w-48 whitespace-pre-wrap" title={project.by}>
-                        {truncateText(project.by, 50, 2)}
-                      </div>
-                    </td>
-                    <td className="px-4 py-2 border-b">
-                      <div className="w-48 whitespace-pre-wrap" title={project.name}>
-                        {truncateText(project.name, 50, 2)}
-                      </div>
-                    </td>
-                    <td className="px-4 py-2 border-b">
-                      <div className="w-48 whitespace-pre-wrap" title={project.area}>
-                        {truncateText(project.area, 50, 2)}
-                      </div>
-                    </td>
-                    <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Card>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
