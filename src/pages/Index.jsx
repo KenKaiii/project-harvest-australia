@@ -37,8 +37,8 @@ const Index = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="Transport and Main Roads">Transport and Main Roads</SelectItem>
-              <SelectItem value="infrastructure">Infrastructure</SelectItem>
-              <SelectItem value="healthcare">Healthcare</SelectItem>
+              <SelectItem value="Health">Health</SelectItem>
+              <SelectItem value="Education">Education</SelectItem>
             </SelectContent>
           </Select>
 

@@ -1,18 +1,8 @@
 import Papa from 'papaparse';
 
-const stateCSVMap = {
-  queensland: 'https://raw.githubusercontent.com/KenKaiii/project-harvest-australia/main/budgets/Queensland.csv',
-  // Add other states here as they become available
-};
+const csvFileUrl = 'https://raw.githubusercontent.com/KenKaiii/project-harvest-australia/main/budgets/Queensland.csv';
 
-export const extractProjectData = async (state, infoType) => {
-  const csvFileUrl = stateCSVMap[state.toLowerCase()];
-  
-  if (!csvFileUrl) {
-    console.error(`No CSV file found for state: ${state}`);
-    throw new Error(`No CSV file found for state: ${state}`);
-  }
-
+export const extractProjectData = async (infoType) => {
   try {
     console.log(`Fetching CSV data from: ${csvFileUrl}`);
     const response = await fetch(csvFileUrl);
@@ -26,12 +16,12 @@ export const extractProjectData = async (state, infoType) => {
           console.log('CSV parsing complete');
           console.log(`Total rows in CSV: ${results.data.length}`);
           let filteredData = results.data.filter(row => 
-            row['Portfolio'] && row['Portfolio'].toLowerCase().includes('transport and main roads')
+            row['Portfolio'] && row['Portfolio'].toLowerCase().includes(infoType.toLowerCase())
           );
           console.log(`Filtered rows for ${infoType}: ${filteredData.length}`);
           const processedData = filteredData.map(row => ({
-            area: row['SA4 Name'] || 'N/A',
             name: row['Project Name'] || 'N/A',
+            area: row['SA4 Name'] || 'N/A',
             budget: row['Budget'] || 'N/A'
           }));
           console.log('Processed data:', processedData);

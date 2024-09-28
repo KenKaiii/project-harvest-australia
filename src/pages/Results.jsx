@@ -19,7 +19,7 @@ const Results = () => {
         try {
           setIsLoading(true);
           console.log(`Fetching data for ${selectedState}, ${selectedInfoType}`);
-          const data = await extractProjectData(selectedState, selectedInfoType);
+          const data = await extractProjectData(selectedInfoType);
           console.log('Data extracted successfully:', data);
           setProjectData(data);
 
@@ -72,16 +72,16 @@ const Results = () => {
           <table className="min-w-full bg-white border border-gray-300">
             <thead>
               <tr>
-                <th className="px-4 py-2 bg-gray-100 border-b">Area</th>
                 <th className="px-4 py-2 bg-gray-100 border-b">Project Name</th>
+                <th className="px-4 py-2 bg-gray-100 border-b">Area</th>
                 <th className="px-4 py-2 bg-gray-100 border-b">Budget</th>
               </tr>
             </thead>
             <tbody>
               {projectData.map((project, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                  <td className="px-4 py-2 border-b">{project.area}</td>
                   <td className="px-4 py-2 border-b">{project.name}</td>
+                  <td className="px-4 py-2 border-b">{project.area}</td>
                   <td className="px-4 py-2 border-b">{project.budget}</td>
                 </tr>
               ))}
