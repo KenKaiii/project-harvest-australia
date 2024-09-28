@@ -51,11 +51,24 @@ const Results = () => {
     setIsLoading(false);
   };
 
-  const truncateText = (text, maxLength) => {
+  const truncateText = (text, maxLength, maxLines = 2) => {
     if (typeof text !== 'string' || text === null) {
       return 'N/A';
     }
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    const words = text.split(' ');
+    let result = '';
+    let lines = 1;
+    for (let word of words) {
+      if ((result + word).length > maxLength * lines) {
+        if (lines >= maxLines) {
+          return result.trim() + '...';
+        }
+        result += '\n';
+        lines++;
+      }
+      result += word + ' ';
+    }
+    return result.trim();
   };
 
   const formatBudget = (budget) => {
@@ -111,7 +124,7 @@ const Results = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
       <div className="max-w-6xl w-full space-y-4">
         <h1 className="text-3xl font-bold mb-4 text-white">Here's what we've got you..</h1>
-        <div className="space-y-1 text-sm text-white">
+        <div className="space-y-0.5 text-sm text-white">
           <p>State: <span className="font-semibold">{selectedState}</span></p>
           <p>Information Type: <span className="font-semibold">{selectedInfoType}</span></p>
           <p>Keywords: <span className="font-semibold">{keywords || 'None'}</span></p>
@@ -137,7 +150,7 @@ const Results = () => {
         </div>
         <Card className="bg-white rounded-xl p-8 shadow-lg">
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border border-gray-300 text-sm">
+            <table className="w-full bg-white border border-gray-300 text-sm">
               <thead>
                 <tr>
                   <th 
@@ -182,18 +195,18 @@ const Results = () => {
                 {projectData.map((project, index) => (
                   <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                     <td className="px-4 py-2 border-b">
-                      <div className="truncate w-full text-xs" title={project.by}>
-                        {truncateText(project.by, 60)}
+                      <div className="w-48 whitespace-pre-wrap" title={project.by}>
+                        {truncateText(project.by, 50, 2)}
                       </div>
                     </td>
                     <td className="px-4 py-2 border-b">
-                      <div className="truncate w-full text-xs" title={project.name}>
-                        {truncateText(project.name, 60)}
+                      <div className="w-48 whitespace-pre-wrap" title={project.name}>
+                        {truncateText(project.name, 50, 2)}
                       </div>
                     </td>
                     <td className="px-4 py-2 border-b">
-                      <div className="truncate w-full text-xs" title={project.area}>
-                        {truncateText(project.area, 60)}
+                      <div className="w-48 whitespace-pre-wrap" title={project.area}>
+                        {truncateText(project.area, 50, 2)}
                       </div>
                     </td>
                     <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
