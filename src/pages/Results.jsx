@@ -182,17 +182,17 @@ const Results = () => {
                 {projectData.map((project, index) => (
                   <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                     <td className="px-4 py-2 border-b">
-                      <div className="truncate-text text-xs" title={project.by}>
+                      <div className="truncate w-full text-xs" title={project.by}>
                         {truncateText(project.by, 60)}
                       </div>
                     </td>
                     <td className="px-4 py-2 border-b">
-                      <div className="truncate-text text-xs" title={project.name}>
+                      <div className="truncate w-full text-xs" title={project.name}>
                         {truncateText(project.name, 60)}
                       </div>
                     </td>
                     <td className="px-4 py-2 border-b">
-                      <div className="truncate-text text-xs" title={project.area}>
+                      <div className="truncate w-full text-xs" title={project.area}>
                         {truncateText(project.area, 60)}
                       </div>
                     </td>
