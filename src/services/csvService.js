@@ -2,7 +2,7 @@ import Papa from 'papaparse';
 
 const csvFileUrl = 'https://raw.githubusercontent.com/KenKaiii/project-harvest-australia/main/budgets/Queensland.csv';
 
-export const extractProjectData = async (infoType) => {
+export const extractProjectData = async (infoType, keywords = '') => {
   try {
     console.log(`Fetching CSV data from: ${csvFileUrl}`);
     const response = await fetch(csvFileUrl);
@@ -18,12 +18,22 @@ export const extractProjectData = async (infoType) => {
           let filteredData = results.data.filter(row => 
             row['Portfolio'] && row['Portfolio'].toLowerCase().includes(infoType.toLowerCase())
           );
-          console.log(`Filtered rows for ${infoType}: ${filteredData.length}`);
+
+          if (keywords) {
+            const keywordsLower = keywords.toLowerCase();
+            filteredData = filteredData.filter(row => 
+              Object.values(row).some(value => 
+                value && value.toLowerCase().includes(keywordsLower)
+              )
+            );
+          }
+
+          console.log(`Filtered rows for ${infoType} and keywords "${keywords}": ${filteredData.length}`);
           const processedData = filteredData.map(row => ({
             name: row['Project Name'] || 'N/A',
             area: row['SA4 Name'] || 'N/A',
             budget: row['Budget 2024-25'] || 'N/A',
-            by: row['Agency'] || 'N/A'  // Added this line to include the Agency information
+            by: row['Agency'] || 'N/A'
           }));
           console.log('Processed data:', processedData);
           resolve(processedData);

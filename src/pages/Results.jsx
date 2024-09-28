@@ -11,15 +11,15 @@ const Results = () => {
   const [chatGptStatus, setChatGptStatus] = useState('Not connected');
   const location = useLocation();
   const navigate = useNavigate();
-  const { selectedState, selectedInfoType } = location.state || {};
+  const { selectedState, selectedInfoType, keywords } = location.state || {};
 
   useEffect(() => {
     if (selectedState && selectedInfoType) {
       const fetchData = async () => {
         try {
           setIsLoading(true);
-          console.log(`Fetching data for ${selectedState}, ${selectedInfoType}`);
-          const data = await extractProjectData(selectedInfoType);
+          console.log(`Fetching data for ${selectedState}, ${selectedInfoType}, keywords: ${keywords}`);
+          const data = await extractProjectData(selectedInfoType, keywords);
           console.log('Data extracted successfully:', data);
           setProjectData(data);
 
@@ -44,7 +44,7 @@ const Results = () => {
       setError('Missing state or information type');
       setIsLoading(false);
     }
-  }, [selectedState, selectedInfoType]);
+  }, [selectedState, selectedInfoType, keywords]);
 
   const truncateText = (text, maxLength) => {
     if (typeof text !== 'string' || text === null) {
@@ -78,6 +78,9 @@ const Results = () => {
         </p>
         <p className="mb-2 text-sm">
           Information Type: <span className="font-semibold">{selectedInfoType}</span>
+        </p>
+        <p className="mb-2 text-sm">
+          Keywords: <span className="font-semibold">{keywords || 'None'}</span>
         </p>
         <p className="mb-4 text-sm">
           ChatGPT API Status: <span className="font-semibold">{chatGptStatus}</span>

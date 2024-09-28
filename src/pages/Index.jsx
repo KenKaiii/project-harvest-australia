@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const Index = () => {
   const [selectedState, setSelectedState] = useState('');
   const [selectedInfoType, setSelectedInfoType] = useState('');
+  const [keywords, setKeywords] = useState('');
   const navigate = useNavigate();
 
   const handleExtract = () => {
     if (selectedState && selectedInfoType) {
-      navigate('/results', { state: { selectedState, selectedInfoType } });
+      navigate('/results', { state: { selectedState, selectedInfoType, keywords } });
     }
   };
 
@@ -41,6 +43,13 @@ const Index = () => {
               <SelectItem value="Education">Education</SelectItem>
             </SelectContent>
           </Select>
+
+          <Input
+            type="text"
+            placeholder="Enter keywords (e.g., Mount Isa)"
+            value={keywords}
+            onChange={(e) => setKeywords(e.target.value)}
+          />
 
           <Button 
             onClick={handleExtract} 
