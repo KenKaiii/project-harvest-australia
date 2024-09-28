@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { extractProjectData } from '../services/csvService';
 import { analyzeChatGPT } from '../services/chatGptService';
+import { downloadAsCSV } from '../utils/csvDownload';
 
 const Results = () => {
   const [projectData, setProjectData] = useState([]);
@@ -61,6 +62,10 @@ const Results = () => {
     return `$${numericValue.toLocaleString()}`;
   };
 
+  const handleDownloadCSV = () => {
+    downloadAsCSV(projectData, 'project_data.csv');
+  };
+
   if (isLoading) {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center">Loading...</div>;
   }
@@ -85,6 +90,11 @@ const Results = () => {
         <p className="mb-4 text-sm">
           ChatGPT API Status: <span className="font-semibold">{chatGptStatus}</span>
         </p>
+        <div className="flex justify-end mb-4">
+          <Button onClick={handleDownloadCSV} className="text-sm">
+            Download as CSV
+          </Button>
+        </div>
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300 text-sm">
             <thead>
