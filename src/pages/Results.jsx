@@ -38,12 +38,15 @@ const Results = () => {
         } catch (err) {
           console.error('Error in fetchData:', err);
           setError(err.message);
+        } finally {
+          setIsLoading(false);
         }
       };
       fetchData();
     } else {
       console.error('Missing selectedState or selectedInfoType');
       setError('Missing state or information type');
+      setIsLoading(false);
     }
   }, [selectedState, selectedInfoType, keywords]);
 
@@ -98,7 +101,6 @@ const Results = () => {
     }
     return <ChevronDown size={16} />;
   };
-
 
   if (isLoading) {
     return <LoadingScreen onComplete={handleLoadingComplete} />;
@@ -200,6 +202,7 @@ const Results = () => {
         </Button>
       </div>
     </div>
+  );
 };
 
 export default Results;
