@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { extractProjectData } from '../services/csvService';
 import { analyzeChatGPT } from '../services/chatGptService';
 import { downloadAsCSV } from '../utils/csvDownload';
@@ -107,9 +108,9 @@ const Results = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold mb-4">Extracted Project Information</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
+      <Card className="bg-white rounded-xl p-8 shadow-lg max-w-6xl w-full space-y-8">
+        <h1 className="text-3xl font-bold mb-4">Here's what we've got you..</h1>
         <p className="mb-2 text-sm">
           State: <span className="font-semibold">{selectedState}</span>
         </p>
@@ -179,7 +180,7 @@ const Results = () => {
             </thead>
             <tbody>
               {projectData.map((project, index) => (
-                <tr key={index} className="hover:bg-black hover:text-white transition-colors duration-200">
+                <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                   <td className="px-4 py-2 border-b">
                     <div className="truncate-text text-xs" title={project.by}>
                       {truncateText(project.by, 60)}
@@ -204,7 +205,7 @@ const Results = () => {
         <Button onClick={() => navigate('/')} className="mt-4 text-sm">
           Back to Home
         </Button>
-      </div>
+      </Card>
     </div>
   );
 };
