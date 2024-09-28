@@ -23,7 +23,6 @@ const Results = () => {
           console.log('Data extracted successfully:', data);
           setProjectData(data);
 
-          // Check ChatGPT API connection
           try {
             const analyzedData = await analyzeChatGPT(data);
             console.log('ChatGPT analysis complete:', analyzedData);
@@ -84,8 +83,16 @@ const Results = () => {
             <tbody>
               {projectData.map((project, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                  <td className="px-4 py-2 border-b">{project.name}</td>
-                  <td className="px-4 py-2 border-b">{truncateText(project.area, 30)}</td>
+                  <td className="px-4 py-2 border-b">
+                    <div className="truncate-text" title={project.name}>
+                      {truncateText(project.name, 30)}
+                    </div>
+                  </td>
+                  <td className="px-4 py-2 border-b">
+                    <div className="truncate-text" title={project.area}>
+                      {truncateText(project.area, 30)}
+                    </div>
+                  </td>
                   <td className="px-4 py-2 border-b">{project.budget}</td>
                 </tr>
               ))}
