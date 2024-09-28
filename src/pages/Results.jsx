@@ -123,7 +123,10 @@ const Results = () => {
           <span className="text-sm mr-2">ChatGPT API Status:</span>
           <div className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
             chatGptStatus === 'Connected' ? 'bg-green-500' : 'bg-red-500'
-          } shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 animate-pulse`}>
+          } shadow-lg flex items-center`}>
+            {chatGptStatus === 'Connected' && (
+              <span className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>
+            )}
             {chatGptStatus}
           </div>
         </div>
