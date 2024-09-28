@@ -38,6 +38,7 @@ const Index = () => {
             <SelectContent>
               <SelectItem value="infrastructure">Infrastructure</SelectItem>
               <SelectItem value="healthcare">Healthcare</SelectItem>
+              <SelectItem value="Department of Transport and Main Roads">Department of Transport and Main Roads</SelectItem>
             </SelectContent>
           </Select>
 

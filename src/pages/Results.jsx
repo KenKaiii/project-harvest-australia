@@ -76,6 +76,7 @@ const Results = () => {
 Name: ${project.name}
 Budget: ${project.budget}
 Year: ${project.year}
+Department: ${project.department}
 
 `
               ))
