@@ -29,7 +29,7 @@ const Results = () => {
           try {
             const analyzedData = await analyzeChatGPT(data);
             console.log('ChatGPT analysis complete:', analyzedData);
-            setChatGptStatus('Connected and analyzed data');
+            setChatGptStatus('Connected');
           } catch (chatGptError) {
             console.error('Error connecting to ChatGPT API:', chatGptError);
             setChatGptStatus('Connection failed');
@@ -119,9 +119,14 @@ const Results = () => {
         <p className="mb-2 text-sm">
           Keywords: <span className="font-semibold">{keywords || 'None'}</span>
         </p>
-        <p className="mb-4 text-sm">
-          ChatGPT API Status: <span className="font-semibold">{chatGptStatus}</span>
-        </p>
+        <div className="mb-4 flex items-center">
+          <span className="text-sm mr-2">ChatGPT API Status:</span>
+          <div className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
+            chatGptStatus === 'Connected' ? 'bg-green-500' : 'bg-red-500'
+          } shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105 animate-pulse`}>
+            {chatGptStatus}
+          </div>
+        </div>
         <div className="flex justify-end mb-4">
           <Button onClick={handleDownloadCSV} className="text-sm">
             Download as CSV
