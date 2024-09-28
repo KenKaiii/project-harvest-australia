@@ -109,19 +109,15 @@ const Results = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
-      <div className="max-w-6xl w-full space-y-8">
+      <div className="max-w-6xl w-full space-y-4">
         <h1 className="text-3xl font-bold mb-4 text-white">Here's what we've got you..</h1>
-        <p className="mb-2 text-sm text-white">
-          State: <span className="font-semibold">{selectedState}</span>
-        </p>
-        <p className="mb-2 text-sm text-white">
-          Information Type: <span className="font-semibold">{selectedInfoType}</span>
-        </p>
-        <p className="mb-2 text-sm text-white">
-          Keywords: <span className="font-semibold">{keywords || 'None'}</span>
-        </p>
-        <div className="mb-4 flex items-center">
-          <span className="text-sm mr-2 text-white">ChatGPT API Status:</span>
+        <div className="space-y-1 text-sm text-white">
+          <p>State: <span className="font-semibold">{selectedState}</span></p>
+          <p>Information Type: <span className="font-semibold">{selectedInfoType}</span></p>
+          <p>Keywords: <span className="font-semibold">{keywords || 'None'}</span></p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <span className="text-sm text-white">ChatGPT API Status:</span>
           <div className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
             chatGptStatus === 'Connected' ? 'bg-green-500' : 'bg-red-500'
           } shadow-lg flex items-center`}>
@@ -131,8 +127,11 @@ const Results = () => {
             {chatGptStatus}
           </div>
         </div>
-        <div className="flex justify-end mb-4">
-          <Button onClick={handleDownloadCSV} className="text-sm">
+        <div className="flex justify-between items-center">
+          <Button onClick={() => navigate('/')} className="text-sm bg-transparent hover:bg-white/20 text-white border border-white">
+            Back to Home
+          </Button>
+          <Button onClick={handleDownloadCSV} className="text-sm bg-transparent hover:bg-white/20 text-white border border-white">
             Download as CSV
           </Button>
         </div>
@@ -204,9 +203,6 @@ const Results = () => {
             </table>
           </div>
         </Card>
-        <Button onClick={() => navigate('/')} className="mt-4 text-sm">
-          Back to Home
-        </Button>
       </div>
     </div>
   );
