@@ -41,12 +41,15 @@ const Index = () => {
               <SelectItem value="Transport and Main Roads">Transport and Main Roads</SelectItem>
               <SelectItem value="Health">Health</SelectItem>
               <SelectItem value="Education">Education</SelectItem>
+              <SelectItem value="Department of Housing, Local Government, Planning and Public Works">Department of Housing, Local Government, Planning and Public Works</SelectItem>
+              <SelectItem value="QBuild">QBuild</SelectItem>
+              <SelectItem value="Queensland Treasury">Queensland Treasury</SelectItem>
             </SelectContent>
           </Select>
 
           <Input
             type="text"
-            placeholder="Enter keywords (e.g., Mount Isa)"
+            placeholder="Enter keywords (optional)"
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
           />

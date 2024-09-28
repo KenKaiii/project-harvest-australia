@@ -15,9 +15,11 @@ export const extractProjectData = async (infoType, keywords = '') => {
         complete: (results) => {
           console.log('CSV parsing complete');
           console.log(`Total rows in CSV: ${results.data.length}`);
-          let filteredData = results.data.filter(row => 
-            row['Portfolio'] && row['Portfolio'].toLowerCase().includes(infoType.toLowerCase())
-          );
+          let filteredData = results.data.filter(row => {
+            const portfolioMatch = row['Portfolio'] && row['Portfolio'].toLowerCase().includes(infoType.toLowerCase());
+            const agencyMatch = row['Agency'] && row['Agency'].toLowerCase().includes(infoType.toLowerCase());
+            return portfolioMatch || agencyMatch;
+          });
 
           if (keywords) {
             const keywordsLower = keywords.toLowerCase();
