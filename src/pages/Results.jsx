@@ -5,6 +5,8 @@ import { extractProjectData } from '../services/csvService';
 
 const Results = () => {
   const [projectData, setProjectData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { selectedState, selectedInfoType } = location.state || {};
@@ -12,12 +14,27 @@ const Results = () => {
   useEffect(() => {
     if (selectedState && selectedInfoType) {
       const fetchData = async () => {
-        const data = await extractProjectData(selectedState, selectedInfoType);
-        setProjectData(data);
+        try {
+          setIsLoading(true);
+          const data = await extractProjectData(selectedState, selectedInfoType);
+          setProjectData(data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
       };
       fetchData();
     }
   }, [selectedState, selectedInfoType]);
+
+  if (isLoading) {
+    return <div className="min-h-screen bg-gray-100 flex items-center justify-center">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="min-h-screen bg-gray-100 flex items-center justify-center text-red-500">{error}</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
