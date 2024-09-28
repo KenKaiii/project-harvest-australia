@@ -120,16 +120,16 @@ const Results = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-700 to-blue-500 p-4">
       <div className="max-w-6xl w-full space-y-4">
-        <h1 className="text-3xl font-bold mb-4 text-white">Here's what we've got you..</h1>
-        <div className="space-y-0.5 text-sm text-white">
+        <h1 className="text-3xl font-bold mb-4 text-white text-center">Here's what we've got you..</h1>
+        <div className="flex justify-center items-center space-x-8 text-white">
           <p>State: <span className="font-semibold">{selectedState}</span></p>
           <p>Information Type: <span className="font-semibold">{selectedInfoType}</span></p>
           <p>Keywords: <span className="font-semibold">{keywords || 'None'}</span></p>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="text-sm text-white">ChatGPT API Status:</span>
+        <div className="flex justify-center items-center space-x-2 text-white">
+          <span className="text-sm">ChatGPT API Status:</span>
           <div className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
             chatGptStatus === 'Connected' ? 'bg-green-500' : 'bg-red-500'
           } shadow-lg flex items-center`}>
@@ -193,17 +193,17 @@ const Results = () => {
               {projectData.map((project, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                   <td className="px-4 py-2 border-b">
-                    <div className="w-48 whitespace-pre-wrap" title={project.by}>
+                    <div className="w-48 whitespace-pre-wrap line-clamp-2" title={project.by}>
                       {truncateText(project.by, 50)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="w-48 whitespace-pre-wrap" title={project.name}>
+                    <div className="w-48 whitespace-pre-wrap line-clamp-2" title={project.name}>
                       {truncateText(project.name, 50)}
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="w-48 whitespace-pre-wrap" title={project.area}>
+                    <div className="w-48 whitespace-pre-wrap line-clamp-2" title={project.area}>
                       {truncateText(project.area, 50)}
                     </div>
                   </td>
