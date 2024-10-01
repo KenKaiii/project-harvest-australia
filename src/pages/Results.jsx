@@ -50,26 +50,6 @@ const Results = () => {
     setIsLoading(false);
   };
 
-  const truncateText = (text, maxLength) => {
-    if (typeof text !== 'string' || text === null) {
-      return 'N/A';
-    }
-    const words = text.split(' ');
-    let result = '';
-    let lines = 1;
-    for (let word of words) {
-      if ((result + word).length > maxLength) {
-        if (lines >= 2) {
-          return result.trim() + '...';
-        }
-        result += '\n';
-        lines++;
-      }
-      result += word + ' ';
-    }
-    return result.trim();
-  };
-
   const formatBudget = (budget) => {
     if (typeof budget !== 'string' || budget === null) {
       return 'N/A';
@@ -118,7 +98,6 @@ const Results = () => {
   if (error) {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center text-red-500">{error}</div>;
   }
-
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-700 to-blue-500 p-4">
@@ -193,19 +172,13 @@ const Results = () => {
               {projectData.map((project, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                   <td className="px-4 py-2 border-b">
-                    <div className="w-64 whitespace-pre-wrap line-clamp-2 text-sm" title={project.by}>
-                      {truncateText(project.by, 80)}
-                    </div>
+                    <div className="text-xs whitespace-normal">{project.by}</div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="w-64 whitespace-pre-wrap line-clamp-2 text-sm" title={project.name}>
-                      {truncateText(project.name, 80)}
-                    </div>
+                    <div className="text-xs whitespace-normal">{project.name}</div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="w-64 whitespace-pre-wrap line-clamp-2 text-sm" title={project.area}>
-                      {truncateText(project.area, 80)}
-                    </div>
+                    <div className="text-xs whitespace-normal">{project.area}</div>
                   </td>
                   <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
                 </tr>
