@@ -18,10 +18,11 @@ const Results = () => {
   const resultsPerPage = 50;
   const location = useLocation();
   const navigate = useNavigate();
-  const { selectedState, keywords } = location.state || {};
 
   useEffect(() => {
-    if (selectedState && keywords) {
+    const { state } = location;
+    if (state && state.selectedState && state.keywords) {
+      const { selectedState, keywords } = state;
       const fetchData = async () => {
         try {
           console.log(`Fetching data for ${selectedState}, keywords: ${keywords}`);
@@ -51,7 +52,7 @@ const Results = () => {
       setError('Missing state or keywords');
       setIsLoading(false);
     }
-  }, [selectedState, keywords]);
+  }, [location]);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
@@ -105,17 +106,19 @@ const Results = () => {
     setDisplayedData(projectData.slice(0, nextPage * resultsPerPage));
   };
 
-
-  if (isLoading) {
-    return <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />;
-  }
-
-  if (error) {
-    return <div className="min-h-screen bg-gray-100 flex items-center justify-center text-red-500">{error}</div>;
-  }
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-700 to-blue-500 p-4">
+      {isLoading ? (
+        <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />
+      ) : error ? (
+        <div className="text-white text-center mt-10">
+          <h2 className="text-2xl font-bold mb-4">Error</h2>
+          <p>{error}</p>
+          <Button onClick={() => navigate('/')} className="mt-4 bg-white text-purple-700">
+            Back to Home
+          </Button>
+        </div>
+      ) : (
       <div className="max-w-6xl w-full space-y-4">
         <div className="flex justify-between items-center">
           <h1 className="text-[1.75rem] font-bold text-white font-inter">BuzzBeam</h1>
@@ -211,7 +214,7 @@ const Results = () => {
             </Button>
           </div>
         )}
-      </div>
+      )}
     </div>
   );
 };

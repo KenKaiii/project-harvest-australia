@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Index = ({ setIsTransitioning }) => {
+const Index = () => {
   const [selectedState, setSelectedState] = useState('queensland');
   const [keywords, setKeywords] = useState('');
   const [isExtracting, setIsExtracting] = useState(false);
@@ -20,11 +20,8 @@ const Index = ({ setIsTransitioning }) => {
   const handleExtract = () => {
     if (selectedState && keywords) {
       setIsExtracting(true);
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setIsExtracting(false);
-        navigate('/results', { state: { selectedState, keywords } });
-      }, 500);
+      console.log('Navigating to results with:', { selectedState, keywords });
+      navigate('/results', { state: { selectedState, keywords } });
     }
   };
 
