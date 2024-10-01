@@ -9,10 +9,13 @@ import LoadingScreen from '../components/LoadingScreen';
 
 const Results = () => {
   const [projectData, setProjectData] = useState([]);
+  const [displayedData, setDisplayedData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [chatGptStatus, setChatGptStatus] = useState('Not connected');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const resultsPerPage = 50;
   const location = useLocation();
   const navigate = useNavigate();
   const { selectedState, keywords } = location.state || {};
@@ -25,6 +28,7 @@ const Results = () => {
           const data = await extractProjectData(keywords);
           console.log('Data extracted successfully:', data);
           setProjectData(data);
+          setDisplayedData(data.slice(0, resultsPerPage));
 
           try {
             const analyzedData = await analyzeChatGPT(data);
@@ -81,6 +85,7 @@ const Results = () => {
     });
 
     setProjectData(sortedData);
+    setDisplayedData(sortedData.slice(0, currentPage * resultsPerPage));
   };
 
   const getSortIcon = (key) => {
@@ -88,6 +93,12 @@ const Results = () => {
       return sortConfig.direction === 'ascending' ? <ChevronUp size={16} /> : <ChevronDown size={16} />;
     }
     return <ChevronDown size={16} />;
+  };
+
+  const loadMore = () => {
+    const nextPage = currentPage + 1;
+    setCurrentPage(nextPage);
+    setDisplayedData(projectData.slice(0, nextPage * resultsPerPage));
   };
 
   if (isLoading) {
@@ -171,7 +182,7 @@ const Results = () => {
               </tr>
             </thead>
             <tbody>
-              {projectData.map((project, index) => (
+              {displayedData.map((project, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                   <td className="px-4 py-2 border-b">
                     <div className="text-[0.8em] whitespace-normal font-inter font-light">{project.by}</div>
@@ -188,6 +199,13 @@ const Results = () => {
             </tbody>
           </table>
         </div>
+        {displayedData.length < projectData.length && (
+          <div className="flex justify-center mt-4">
+            <Button onClick={loadMore} className="bg-white text-purple-700 hover:bg-purple-100 font-inter font-normal">
+              Load More
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
