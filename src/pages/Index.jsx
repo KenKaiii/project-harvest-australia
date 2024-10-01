@@ -7,17 +7,16 @@ import { ChevronDown } from 'lucide-react';
 
 const Index = () => {
   const [selectedState, setSelectedState] = useState('');
-  const [selectedInfoType, setSelectedInfoType] = useState('');
   const [keywords, setKeywords] = useState('');
   const [isExtracting, setIsExtracting] = useState(false);
   const navigate = useNavigate();
 
   const handleExtract = () => {
-    if (selectedState && selectedInfoType) {
+    if (selectedState && keywords) {
       setIsExtracting(true);
       setTimeout(() => {
         setIsExtracting(false);
-        navigate('/results', { state: { selectedState, selectedInfoType, keywords } });
+        navigate('/results', { state: { selectedState, keywords } });
       }, 2000);
     }
   };
@@ -46,36 +45,20 @@ const Index = () => {
           </div>
 
           <div className="relative">
-            <Select value={selectedInfoType} onValueChange={setSelectedInfoType}>
-              <SelectTrigger className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60">
-                <SelectValue placeholder="Select information type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Transport and Main Roads">Transport and Main Roads</SelectItem>
-                <SelectItem value="Health">Health</SelectItem>
-                <SelectItem value="Education">Education</SelectItem>
-                <SelectItem value="Department of Housing, Local Government, Planning and Public Works">Department of Housing, Local Government, Planning and Public Works</SelectItem>
-                <SelectItem value="QBuild">QBuild</SelectItem>
-                <SelectItem value="Queensland Treasury">Queensland Treasury</SelectItem>
-              </SelectContent>
-            </Select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white" />
-          </div>
-
-          <div className="relative">
             <Input
               type="text"
-              placeholder="Enter keywords (optional)"
+              placeholder="Enter keywords (required)"
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
               className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60"
+              required
             />
           </div>
 
           <Button 
             onClick={handleExtract} 
             className={`w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 hover:brightness-110 ${isExtracting ? 'animate-pulse' : ''} border-2 border-white animate-glow`}
-            disabled={!selectedState || !selectedInfoType || isExtracting}
+            disabled={!selectedState || !keywords || isExtracting}
           >
             {isExtracting ? 'Extracting...' : 'Extract'}
           </Button>

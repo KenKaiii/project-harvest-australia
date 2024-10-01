@@ -15,14 +15,14 @@ const Results = () => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const location = useLocation();
   const navigate = useNavigate();
-  const { selectedState, selectedInfoType, keywords } = location.state || {};
+  const { selectedState, keywords } = location.state || {};
 
   useEffect(() => {
-    if (selectedState && selectedInfoType) {
+    if (selectedState && keywords) {
       const fetchData = async () => {
         try {
-          console.log(`Fetching data for ${selectedState}, ${selectedInfoType}, keywords: ${keywords}`);
-          const data = await extractProjectData(selectedInfoType, keywords);
+          console.log(`Fetching data for ${selectedState}, keywords: ${keywords}`);
+          const data = await extractProjectData(keywords);
           console.log('Data extracted successfully:', data);
           setProjectData(data);
 
@@ -41,10 +41,10 @@ const Results = () => {
       };
       fetchData();
     } else {
-      console.error('Missing selectedState or selectedInfoType');
-      setError('Missing state or information type');
+      console.error('Missing selectedState or keywords');
+      setError('Missing state or keywords');
     }
-  }, [selectedState, selectedInfoType, keywords]);
+  }, [selectedState, keywords]);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
@@ -119,14 +119,14 @@ const Results = () => {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center text-red-500">{error}</div>;
   }
 
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-700 to-blue-500 p-4">
       <div className="max-w-6xl w-full space-y-4">
         <h1 className="text-3xl font-bold mb-4 text-white text-center">Here's what we've got you..</h1>
         <div className="flex justify-center items-center space-x-8 text-white">
           <p>State: <span className="font-semibold">{selectedState.charAt(0).toUpperCase() + selectedState.slice(1)}</span></p>
-          <p>Information Type: <span className="font-semibold">{selectedInfoType}</span></p>
-          <p>Keywords: <span className="font-semibold">{keywords || 'None'}</span></p>
+          <p>Keywords: <span className="font-semibold">{keywords}</span></p>
         </div>
         <div className="flex justify-center items-center space-x-2 text-white">
           <span className="text-sm">ChatGPT API Status:</span>
