@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Progress } from "@/components/ui/progress";
-import { Binoculars, Fingerprint, LockKeyhole, Search } from 'lucide-react';
+import { Search, Fingerprint, LockKeyhole, Eye } from 'lucide-react';
 
 const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("Initializing sneaky mode...");
-  const [icon, setIcon] = useState(<Binoculars className="w-6 h-6 text-white animate-pulse" />);
+  const [icon, setIcon] = useState(<Eye className="w-6 h-6 text-white animate-pulse" />);
 
   useEffect(() => {
     const duration = Math.random() * (4000 - 2000) + 2000; // Random duration between 2-4 seconds
@@ -28,10 +28,10 @@ const LoadingScreen = ({ onLoadingComplete }) => {
         setIcon(<Fingerprint className="w-6 h-6 text-white animate-pulse" />);
       } else if (newProgress < 80) {
         setMessage("Covering our tracks...");
-        setIcon(<Binoculars className="w-6 h-6 text-white animate-pulse" />);
+        setIcon(<Eye className="w-6 h-6 text-white animate-pulse" />);
       } else {
         setMessage("Mission accomplished! Exfiltrating...");
-        setIcon(<Binoculars className="w-6 h-6 text-white animate-bounce" />);
+        setIcon(<Eye className="w-6 h-6 text-white animate-bounce" />);
       }
 
       if (newProgress === 100) {
