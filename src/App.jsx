@@ -13,6 +13,10 @@ const queryClient = new QueryClient();
 const App = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  const handleLoadingComplete = () => {
+    setIsTransitioning(false);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -20,7 +24,7 @@ const App = () => {
         <BrowserRouter>
           <AnimatePresence mode="wait">
             {isTransitioning ? (
-              <LoadingScreen key="loading" setIsTransitioning={setIsTransitioning} />
+              <LoadingScreen key="loading" onLoadingComplete={handleLoadingComplete} />
             ) : (
               <Routes>
                 <Route path="/" element={<Index setIsTransitioning={setIsTransitioning} />} />

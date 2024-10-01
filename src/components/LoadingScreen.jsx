@@ -4,7 +4,7 @@ import { Search, Fingerprint, LockKeyhole, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const LoadingScreen = ({ setIsTransitioning }) => {
+const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("Initializing sneaky mode...");
   const [icon, setIcon] = useState(<Eye className="w-6 h-6 text-white animate-pulse" />);
@@ -17,7 +17,9 @@ const LoadingScreen = ({ setIsTransitioning }) => {
         if (prevProgress >= 100) {
           clearInterval(interval);
           setTimeout(() => {
-            setIsTransitioning(false);
+            if (onLoadingComplete) {
+              onLoadingComplete();
+            }
             navigate('/results');
           }, 500); // Delay to allow for exit animation
           return 100;
@@ -27,7 +29,7 @@ const LoadingScreen = ({ setIsTransitioning }) => {
     }, duration / 100);
 
     return () => clearInterval(interval);
-  }, [setIsTransitioning, navigate]);
+  }, [onLoadingComplete, navigate]);
 
   useEffect(() => {
     // Update messages and icons based on progress
