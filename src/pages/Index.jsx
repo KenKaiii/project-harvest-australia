@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { ChevronDown } from 'lucide-react';
 
 const Index = () => {
-  const [selectedState, setSelectedState] = useState('');
+  const [selectedState, setSelectedState] = useState('queensland');
   const [keywords, setKeywords] = useState('');
   const [isExtracting, setIsExtracting] = useState(false);
   const [isFormFilled, setIsFormFilled] = useState(false);
@@ -51,8 +51,6 @@ const Index = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="queensland">Queensland</SelectItem>
-                  <SelectItem value="new-south-wales">New South Wales</SelectItem>
-                  <SelectItem value="victoria">Victoria</SelectItem>
                 </SelectContent>
               </Select>
               <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white" />
