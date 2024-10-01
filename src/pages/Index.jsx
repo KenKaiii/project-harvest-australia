@@ -65,7 +65,7 @@ const Index = () => {
                 value={keywords}
                 onChange={(e) => setKeywords(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-80 font-inter font-normal"
+                className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-100 font-inter font-normal"
                 required
               />
             </div>
