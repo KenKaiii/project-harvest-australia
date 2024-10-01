@@ -55,7 +55,7 @@ const processQTripData = (data, keywords) => {
   ).map(row => ({
     name: row['Investment Name'] || 'N/A',
     area: row['District'] || 'N/A',
-    budget: row["2024-25 ($'000)"] ? (parseFloat(row["2024-25 ($'000)"]) / 1000).toString() : 'N/A',
+    budget: row["2024-25 ($’000)"] ? (parseFloat(row["2024-25 ($’000)"]) / 1000).toString() : 'N/A',
     by: row['Local Government'] || 'N/A'
   }));
 };
