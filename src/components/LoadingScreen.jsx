@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Progress } from "@/components/ui/progress";
-import { Binoculars, Fingerprint, Lock, Search } from 'lucide-react';
+import { Binoculars, Fingerprint, LockIcon, Search } from 'lucide-react';
 
 const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
@@ -19,7 +19,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       // Update messages and icons based on progress
       if (newProgress < 20) {
         setMessage("Sneaking into the database...");
-        setIcon(<Lock className="w-6 h-6 text-white animate-pulse" />);
+        setIcon(<LockIcon className="w-6 h-6 text-white animate-pulse" />);
       } else if (newProgress < 40) {
         setMessage("Snooping around for project records...");
         setIcon(<Search className="w-6 h-6 text-white animate-pulse" />);
