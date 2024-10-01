@@ -41,20 +41,18 @@ const Results = () => {
         } catch (err) {
           console.error('Error in fetchData:', err);
           setError(err.message);
-        } finally {
-          // Delay setting isLoading to false to ensure LoadingScreen is fully displayed
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 500); // Add a small delay to ensure the loading screen completes
         }
       };
       fetchData();
     } else {
       console.error('Missing selectedState or keywords');
       setError('Missing state or keywords');
-      setIsLoading(false);
     }
   }, [selectedState, keywords]);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
 
   const formatBudget = (budget) => {
     if (typeof budget !== 'string' || budget === null) {
@@ -104,8 +102,9 @@ const Results = () => {
     setDisplayedData(projectData.slice(0, nextPage * resultsPerPage));
   };
 
+
   if (isLoading) {
-    return <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />;
+    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
   }
 
   if (error) {
