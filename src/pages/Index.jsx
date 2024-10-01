@@ -35,8 +35,10 @@ const Index = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
       <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-8 shadow-lg max-w-md w-full space-y-8">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-[1.75rem] font-bold text-white font-inter">BuzzBeam</h1>
+        </div>
         <div className="text-center">
-          <h1 className="text-[1.75rem] font-bold text-white mb-2 font-inter">BuzzBeam</h1>
           <h2 className="text-4xl font-bold text-white mb-2 font-inter">Project Scanner</h2>
         </div>
         
