@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,12 @@ const Index = () => {
   const [selectedState, setSelectedState] = useState('');
   const [keywords, setKeywords] = useState('');
   const [isExtracting, setIsExtracting] = useState(false);
+  const [isFormFilled, setIsFormFilled] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsFormFilled(selectedState && keywords);
+  }, [selectedState, keywords]);
 
   const handleExtract = () => {
     if (selectedState && keywords) {
@@ -21,18 +26,24 @@ const Index = () => {
     }
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleExtract();
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
-      <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-8 shadow-lg max-w-md w-full space-y-8 animate-pulse-glow">
+      <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-8 shadow-lg max-w-md w-full space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-2">BuzzBeam Tools</h1>
-          <p className="text-xl text-white opacity-80">Uncover hidden insights in seconds</p>
+          <h1 className="text-[1.75rem] font-bold text-white mb-2 font-inter">BuzzBeam</h1>
+          <h2 className="text-4xl font-bold text-white mb-2 font-inter">Project Scanner</h2>
         </div>
         
         <div className="space-y-6">
           <div className="relative">
             <Select value={selectedState} onValueChange={setSelectedState}>
-              <SelectTrigger className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60">
+              <SelectTrigger className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60 font-inter font-normal">
                 <SelectValue placeholder="Select a state" />
               </SelectTrigger>
               <SelectContent>
@@ -47,17 +58,18 @@ const Index = () => {
           <div className="relative">
             <Input
               type="text"
-              placeholder="Enter keywords (required)"
+              placeholder="Enter project keywords (required)"
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
-              className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-60"
+              onKeyPress={handleKeyPress}
+              className="w-full bg-white bg-opacity-20 border-none text-white placeholder-white placeholder-opacity-80 font-inter font-normal"
               required
             />
           </div>
 
           <Button 
             onClick={handleExtract} 
-            className={`w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 hover:brightness-110 ${isExtracting ? 'animate-pulse' : ''} border-2 border-white animate-glow`}
+            className={`w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 hover:brightness-110 ${isExtracting ? 'animate-pulse' : ''} ${isFormFilled ? 'animate-glow border-2 border-white' : ''} font-inter font-normal`}
             disabled={!selectedState || !keywords || isExtracting}
           >
             {isExtracting ? 'Extracting...' : 'Extract'}
