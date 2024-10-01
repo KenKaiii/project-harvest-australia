@@ -24,7 +24,7 @@ const Index = ({ setIsTransitioning }) => {
       setTimeout(() => {
         setIsExtracting(false);
         navigate('/results', { state: { selectedState, keywords } });
-      }, 500); // Delay to allow for exit animation
+      }, 500);
     }
   };
 

@@ -41,12 +41,15 @@ const Results = () => {
         } catch (err) {
           console.error('Error in fetchData:', err);
           setError(err.message);
+        } finally {
+          setIsLoading(false);
         }
       };
       fetchData();
     } else {
       console.error('Missing selectedState or keywords');
       setError('Missing state or keywords');
+      setIsLoading(false);
     }
   }, [selectedState, keywords]);
 
@@ -104,7 +107,7 @@ const Results = () => {
 
 
   if (isLoading) {
-    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
+    return <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />;
   }
 
   if (error) {
