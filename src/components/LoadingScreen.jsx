@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Progress } from "@/components/ui/progress";
 import { Search, Fingerprint, LockKeyhole, Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
-const LoadingScreen = ({ onLoadingComplete }) => {
+const LoadingScreen = ({ setIsTransitioning }) => {
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("Initializing sneaky mode...");
   const [icon, setIcon] = useState(<Eye className="w-6 h-6 text-white animate-pulse" />);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const duration = 5000; // Fixed duration of 5 seconds
@@ -13,7 +16,10 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       setProgress((prevProgress) => {
         if (prevProgress >= 100) {
           clearInterval(interval);
-          onLoadingComplete();
+          setTimeout(() => {
+            setIsTransitioning(false);
+            navigate('/results');
+          }, 500); // Delay to allow for exit animation
           return 100;
         }
         return prevProgress + 1;
@@ -21,7 +27,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
     }, duration / 100);
 
     return () => clearInterval(interval);
-  }, [onLoadingComplete]);
+  }, [setIsTransitioning, navigate]);
 
   useEffect(() => {
     // Update messages and icons based on progress
@@ -44,7 +50,13 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   }, [progress]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4"
+    >
       <div className="bg-black bg-opacity-70 backdrop-blur-lg rounded-xl p-8 shadow-lg max-w-md w-full space-y-8 animate-pulse-slow">
         <h2 className="text-3xl font-bold text-white mb-4 text-center">BuzzBeam Covert Ops</h2>
         <div className="flex justify-center mb-6">{icon}</div>
@@ -52,7 +64,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
         <p className="text-center text-lg font-semibold text-white">{message}</p>
         <p className="text-center text-sm mt-2 text-white opacity-80">{Math.round(progress)}% complete</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
