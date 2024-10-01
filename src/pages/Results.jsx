@@ -101,12 +101,18 @@ const Results = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-purple-700 to-blue-500 p-4">
       <div className="max-w-6xl w-full space-y-4">
-        <h1 className="text-3xl font-bold mb-4 text-white text-center">Here's what we've got you..</h1>
-        <div className="flex justify-center items-center space-x-8 text-white">
+        <div className="flex justify-between items-center">
+          <h1 className="text-[1.75rem] font-bold text-white font-inter">BuzzBeam</h1>
+          <Button onClick={() => navigate('/')} className="text-sm bg-transparent hover:bg-white/20 text-white border border-white font-inter font-normal">
+            Back to Home
+          </Button>
+        </div>
+        <h2 className="text-2xl font-bold mb-4 text-white text-center font-inter">{projectData.length} records found for your search</h2>
+        <div className="flex justify-center items-center space-x-8 text-white font-inter font-normal">
           <p>State: <span className="font-semibold">{selectedState.charAt(0).toUpperCase() + selectedState.slice(1)}</span></p>
           <p>Keywords: <span className="font-semibold">{keywords}</span></p>
         </div>
-        <div className="flex justify-center items-center space-x-2 text-white">
+        <div className="flex justify-center items-center space-x-2 text-white font-inter font-normal">
           <span className="text-sm">ChatGPT API Status:</span>
           <div className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
             chatGptStatus === 'Connected' ? 'bg-green-500' : 'bg-red-500'
@@ -117,11 +123,8 @@ const Results = () => {
             {chatGptStatus}
           </div>
         </div>
-        <div className="flex justify-between items-center">
-          <Button onClick={() => navigate('/')} className="text-sm bg-transparent hover:bg-white/20 text-white border border-white">
-            Back to Home
-          </Button>
-          <Button onClick={handleDownloadCSV} className="text-sm bg-transparent hover:bg-white/20 text-white border border-white">
+        <div className="flex justify-end">
+          <Button onClick={handleDownloadCSV} className="text-sm bg-transparent hover:bg-white/20 text-white border border-white font-inter font-normal">
             Download as CSV
           </Button>
         </div>
@@ -130,7 +133,7 @@ const Results = () => {
             <thead>
               <tr>
                 <th 
-                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer font-inter font-bold"
                   onClick={() => sortData('by')}
                 >
                   <div className="flex items-center justify-between">
@@ -139,7 +142,7 @@ const Results = () => {
                   </div>
                 </th>
                 <th 
-                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer font-inter font-bold"
                   onClick={() => sortData('name')}
                 >
                   <div className="flex items-center justify-between">
@@ -148,7 +151,7 @@ const Results = () => {
                   </div>
                 </th>
                 <th 
-                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer font-inter font-bold"
                   onClick={() => sortData('area')}
                 >
                   <div className="flex items-center justify-between">
@@ -157,7 +160,7 @@ const Results = () => {
                   </div>
                 </th>
                 <th 
-                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer"
+                  className="px-4 py-2 bg-gray-100 border-b text-left text-[1.32em] cursor-pointer font-inter font-bold"
                   onClick={() => sortData('budget')}
                 >
                   <div className="flex items-center justify-between">
@@ -171,15 +174,15 @@ const Results = () => {
               {projectData.map((project, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                   <td className="px-4 py-2 border-b">
-                    <div className="text-[0.8em] whitespace-normal">{project.by}</div>
+                    <div className="text-[0.8em] whitespace-normal font-inter font-light">{project.by}</div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="text-[0.8em] whitespace-normal">{project.name}</div>
+                    <div className="text-[0.8em] whitespace-normal font-inter font-light">{project.name}</div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="text-[0.8em] whitespace-normal">{project.area}</div>
+                    <div className="text-[0.8em] whitespace-normal font-inter font-light">{project.area}</div>
                   </td>
-                  <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
+                  <td className="px-4 py-2 border-b font-inter font-bold text-[0.9em]">{formatBudget(project.budget)}</td>
                 </tr>
               ))}
             </tbody>
