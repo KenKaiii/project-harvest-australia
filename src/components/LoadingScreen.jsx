@@ -1,32 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Progress } from "@/components/ui/progress";
+import { Binoculars, Fingerprint, Lock, Search } from 'lucide-react';
 
 const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
-  const [message, setMessage] = useState("Initializing...");
+  const [message, setMessage] = useState("Initializing sneaky mode...");
+  const [icon, setIcon] = useState(<Binoculars className="w-6 h-6 text-white animate-pulse" />);
 
   useEffect(() => {
+    const duration = Math.random() * (4000 - 2000) + 2000; // Random duration between 2-4 seconds
     const startTime = Date.now();
-    const totalDuration = 5000; // 5 seconds
 
     const interval = setInterval(() => {
       const elapsedTime = Date.now() - startTime;
-      const newProgress = Math.min((elapsedTime / totalDuration) * 100, 100);
+      const newProgress = Math.min((elapsedTime / duration) * 100, 100);
       setProgress(newProgress);
 
-      // Update messages based on progress
+      // Update messages and icons based on progress
       if (newProgress < 20) {
-        setMessage("Connecting to database...");
+        setMessage("Sneaking into the database...");
+        setIcon(<Lock className="w-6 h-6 text-white animate-pulse" />);
       } else if (newProgress < 40) {
-        setMessage("Fetching project records...");
+        setMessage("Snooping around for project records...");
+        setIcon(<Search className="w-6 h-6 text-white animate-pulse" />);
       } else if (newProgress < 60) {
-        setMessage("Processing data...");
+        setMessage("Decoding top-secret data...");
+        setIcon(<Fingerprint className="w-6 h-6 text-white animate-pulse" />);
       } else if (newProgress < 80) {
-        setMessage("Analyzing with ChatGPT...");
-      } else if (newProgress < 95) {
-        setMessage("Preparing results...");
+        setMessage("Covering our tracks...");
+        setIcon(<Binoculars className="w-6 h-6 text-white animate-pulse" />);
       } else {
-        setMessage("Finalizing...");
+        setMessage("Mission accomplished! Exfiltrating...");
+        setIcon(<Binoculars className="w-6 h-6 text-white animate-bounce" />);
       }
 
       if (newProgress === 100) {
@@ -44,9 +49,9 @@ const LoadingScreen = ({ onLoadingComplete }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 to-blue-500 p-4">
-      <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-8 shadow-lg max-w-md w-full space-y-8 animate-pulse-glow">
-        <h2 className="text-3xl font-bold text-white mb-4 text-center">BuzzBeam Tools</h2>
-        <p className="text-xl text-white opacity-80 text-center mb-6">Uncovering hidden insights...</p>
+      <div className="bg-black bg-opacity-70 backdrop-blur-lg rounded-xl p-8 shadow-lg max-w-md w-full space-y-8 animate-pulse-slow">
+        <h2 className="text-3xl font-bold text-white mb-4 text-center">BuzzBeam Covert Ops</h2>
+        <div className="flex justify-center mb-6">{icon}</div>
         <Progress value={progress} className="w-full mb-4" />
         <p className="text-center text-lg font-semibold text-white">{message}</p>
         <p className="text-center text-sm mt-2 text-white opacity-80">{Math.round(progress)}% complete</p>

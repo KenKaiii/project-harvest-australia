@@ -42,7 +42,10 @@ const Results = () => {
           console.error('Error in fetchData:', err);
           setError(err.message);
         } finally {
-          setIsLoading(false);
+          // Delay setting isLoading to false to ensure LoadingScreen is fully displayed
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500); // Add a small delay to ensure the loading screen completes
         }
       };
       fetchData();
@@ -102,7 +105,7 @@ const Results = () => {
   };
 
   if (isLoading) {
-    return <LoadingScreen />;
+    return <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />;
   }
 
   if (error) {
