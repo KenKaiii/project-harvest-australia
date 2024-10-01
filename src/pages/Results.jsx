@@ -37,18 +37,17 @@ const Results = () => {
         } catch (err) {
           console.error('Error in fetchData:', err);
           setError(err.message);
+        } finally {
+          setIsLoading(false);
         }
       };
       fetchData();
     } else {
       console.error('Missing selectedState or keywords');
       setError('Missing state or keywords');
+      setIsLoading(false);
     }
   }, [selectedState, keywords]);
-
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-  };
 
   const formatBudget = (budget) => {
     if (typeof budget !== 'string' || budget === null) {
@@ -92,7 +91,7 @@ const Results = () => {
   };
 
   if (isLoading) {
-    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
+    return <LoadingScreen />;
   }
 
   if (error) {
@@ -172,13 +171,13 @@ const Results = () => {
               {projectData.map((project, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition-colors duration-200">
                   <td className="px-4 py-2 border-b">
-                    <div className="text-xs whitespace-normal">{project.by}</div>
+                    <div className="text-[0.8em] whitespace-normal">{project.by}</div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="text-xs whitespace-normal">{project.name}</div>
+                    <div className="text-[0.8em] whitespace-normal">{project.name}</div>
                   </td>
                   <td className="px-4 py-2 border-b">
-                    <div className="text-xs whitespace-normal">{project.area}</div>
+                    <div className="text-[0.8em] whitespace-normal">{project.area}</div>
                   </td>
                   <td className="px-4 py-2 border-b font-bold">{formatBudget(project.budget)}</td>
                 </tr>

@@ -1,46 +1,61 @@
 import Papa from 'papaparse';
 
-const csvFileUrl = 'https://raw.githubusercontent.com/KenKaiii/project-harvest-australia/main/budgets/Queensland.csv';
+const cpQueenslandUrl = '/data/CPQueensland.csv';
+const qTripQueenslandUrl = '/data/QTripQueensland.csv';
 
 export const extractProjectData = async (keywords) => {
   try {
-    console.log(`Fetching CSV data from: ${csvFileUrl}`);
-    const response = await fetch(csvFileUrl);
-    const csvData = await response.text();
-    console.log('CSV data fetched successfully');
+    const [cpData, qTripData] = await Promise.all([
+      fetchAndParseCSV(cpQueenslandUrl),
+      fetchAndParseCSV(qTripQueenslandUrl)
+    ]);
 
-    return new Promise((resolve, reject) => {
-      Papa.parse(csvData, {
-        header: true,
-        complete: (results) => {
-          console.log('CSV parsing complete');
-          console.log(`Total rows in CSV: ${results.data.length}`);
-          
-          const keywordsLower = keywords.toLowerCase();
-          const filteredData = results.data.filter(row => 
-            Object.values(row).some(value => 
-              value && value.toLowerCase().includes(keywordsLower)
-            )
-          );
+    const processedCPData = processCPData(cpData, keywords);
+    const processedQTripData = processQTripData(qTripData, keywords);
 
-          console.log(`Filtered rows for keywords "${keywords}": ${filteredData.length}`);
-          const processedData = filteredData.map(row => ({
-            name: row['Project Name'] || 'N/A',
-            area: row['SA4 Name'] || 'N/A',
-            budget: row['Budget 2024-25'] || 'N/A',
-            by: row['Agency'] || 'N/A'
-          }));
-          console.log('Processed data:', processedData);
-          resolve(processedData);
-        },
-        error: (error) => {
-          console.error('Error parsing CSV:', error);
-          reject(error);
-        }
-      });
-    });
+    return [...processedCPData, ...processedQTripData];
   } catch (error) {
     console.error('Error fetching or parsing CSV:', error);
     throw error;
   }
+};
+
+const fetchAndParseCSV = async (url) => {
+  const response = await fetch(url);
+  const csvData = await response.text();
+  return new Promise((resolve, reject) => {
+    Papa.parse(csvData, {
+      header: true,
+      complete: (results) => resolve(results.data),
+      error: (error) => reject(error)
+    });
+  });
+};
+
+const processCPData = (data, keywords) => {
+  const keywordsLower = keywords.toLowerCase();
+  return data.filter(row => 
+    Object.values(row).some(value => 
+      value && value.toLowerCase().includes(keywordsLower)
+    )
+  ).map(row => ({
+    name: row['Project Name'] || 'N/A',
+    area: row['SA4 Name'] || 'N/A',
+    budget: row['Budget 2024-25'] || 'N/A',
+    by: row['Agency'] || 'N/A'
+  }));
+};
+
+const processQTripData = (data, keywords) => {
+  const keywordsLower = keywords.toLowerCase();
+  return data.filter(row => 
+    Object.values(row).some(value => 
+      value && value.toLowerCase().includes(keywordsLower)
+    )
+  ).map(row => ({
+    name: row['Investment Name'] || 'N/A',
+    area: row['District'] || 'N/A',
+    budget: row['2024-25 ($\'000)'] || 'N/A',
+    by: row['Local Government'] || 'N/A'
+  }));
 };
